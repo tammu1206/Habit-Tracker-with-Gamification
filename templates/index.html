@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Habit Tracker</title>
+</head>
+<body>
+    <h1>Habit Tracker</h1>
+    
+    <h2>Add User</h2>
+    <form id="userForm">
+        <input type="text" name="username" placeholder="Username" required>
+        <button type="submit">Add User</button>
+    </form>
+
+    <h2>Add Habit</h2>
+    <form id="habitForm">
+        <input type="text" name="habit_name" placeholder="Habit Name" required>
+        <input type="number" name="user_id" placeholder="User ID" required>
+        <button type="submit">Add Habit</button>
+    </form>
+
+    <script>
+        document.getElementById('userForm').onsubmit = async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const response = await fetch('/add_user', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            alert(data.message);
+        };
+
+        document.getElementById('habitForm').onsubmit = async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const response = await fetch('/add_habit', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            alert(data.message);
+        };
+    </script>
+</body>
+</html>
